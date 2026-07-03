@@ -52,7 +52,7 @@ export default function ShareModal({ isOpen, onClose, logoUrl }: ShareModalProps
   };
 
   const handleWhatsApp = () => {
-    const text = encodeURIComponent(`${shareTitle}\n${shareText}\n${appUrl}`);
+    const text = encodeURIComponent(`${shareTitle}\n${shareText}\n${qrUrl}`);
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
 

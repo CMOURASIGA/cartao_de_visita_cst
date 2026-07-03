@@ -18,13 +18,13 @@ async function startServer() {
 
   app.use(cors({
     origin: (origin, callback) => {
-      if (
-        !origin || 
-        allowedOrigins.includes(origin) || 
-        allowedOrigins.length === 0 ||
-        allowedOrigins.includes('https://seudominio.com.br') ||
-        process.env.NODE_ENV !== 'production'
-      ) {
+      if (process.env.NODE_ENV !== 'production') {
+        return callback(null, true);
+      }
+      if (!origin) {
+        return callback(null, true);
+      }
+      if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
       return callback(new Error('Origem não permitida pelo CORS'));
