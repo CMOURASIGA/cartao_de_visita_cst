@@ -5,9 +5,10 @@ import { useState, useEffect } from 'react';
 interface ShareModalProps {
   isOpen: boolean;
   onClose: () => void;
+  logoUrl?: string;
 }
 
-export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
+export default function ShareModal({ isOpen, onClose, logoUrl }: ShareModalProps) {
   const [copied, setCopied] = useState(false);
   const [canShare, setCanShare] = useState(false);
   
@@ -65,7 +66,10 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
           <X className="h-5 w-5" />
         </button>
 
-        <div className="text-center mb-6">
+        <div className="text-center mb-6 mt-4">
+          {logoUrl && (
+            <img src={logoUrl} alt="Logo" className="h-auto w-full max-w-[160px] object-contain mx-auto mb-4" />
+          )}
           <h2 className="text-xl font-semibold text-gray-900">Compartilhe meu cartão digital</h2>
           <p className="text-sm text-gray-500 mt-1">Escaneie o QR Code abaixo ou escolha uma opção.</p>
         </div>

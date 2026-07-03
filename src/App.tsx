@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, Linkedin, Mail, Share2, UserPlus, CheckCircle2, ChevronRight, ArrowRight } from 'lucide-react';
 import Section from './components/Section';
 import ShareModal from './components/ShareModal';
@@ -8,13 +9,21 @@ import { services, projects, automations } from './data';
 
 export default function App() {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    // Esconder a tela de abertura após 2.5 segundos
+    const timer = setTimeout(() => setShowSplash(false), 2500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const env = import.meta.env;
   
   const companyName = env.VITE_COMPANY_NAME || "Consult Services Tecnologia";
   const tagline = env.VITE_COMPANY_TAGLINE || "Tecnologia, processos e integrações para empresas que precisam organizar melhor suas operações.";
   const description = env.VITE_COMPANY_DESCRIPTION || "A Consult Services Tecnologia apoia empresas na estruturação de processos, implantação de sistemas, integrações, automações, webapps e soluções com inteligência artificial aplicada ao negócio.";
-  const logoUrl = env.VITE_COMPANY_LOGO_URL || "https://placehold.co/400x100/003B73/white?text=Consult+Services+Tecnologia";
+  const logoUrl = env.VITE_COMPANY_LOGO_URL || "https://i.imgur.com/gxXnYsA.png";
+  const iconUrl = env.VITE_COMPANY_ICON_URL || "https://i.imgur.com/wr0z5Xv.png";
 
   const personName = env.VITE_PERSON_FULL_NAME || "Christian Moura";
   const personRole = env.VITE_PERSON_ROLE || "Gestor de Projetos, Sistemas e Produtos";
@@ -31,7 +40,40 @@ export default function App() {
   const primaryColor = env.VITE_COMPANY_PRIMARY_COLOR || "#003B73";
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-[#00AEEF] selection:text-white">
+    <>
+      <AnimatePresence>
+        {showSplash && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.6, ease: "easeInOut" } }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-white"
+          >
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{
+                duration: 1,
+                ease: "easeOut",
+              }}
+              className="relative"
+            >
+              <img
+                src={iconUrl}
+                alt={companyName}
+                className="h-24 md:h-32 object-contain"
+              />
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1.5, ease: "easeInOut", delay: 0.5 }}
+                className="absolute -bottom-6 left-0 h-1 bg-[#003B73] rounded-full"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-[#00AEEF] selection:text-white">
       {/* Hero Section */}
       <header className="relative bg-white pt-24 pb-16 px-4 md:px-8 border-b border-gray-100 overflow-hidden">
         <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-[#00AEEF]/5 rounded-full blur-3xl" />
@@ -41,14 +83,10 @@ export default function App() {
           <img 
             src={logoUrl} 
             alt={companyName} 
-            className="h-16 md:h-20 object-contain mx-auto mb-8"
+            className="h-auto w-full max-w-[400px] md:max-w-[560px] object-contain mx-auto mb-0"
           />
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-6 leading-tight">
-            {companyName}
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-[#003B73] font-medium mb-6">
+          <p className="text-xl md:text-2xl text-[#003B73] font-medium mb-6 mt-0 md:-mt-4">
             {tagline}
           </p>
           
@@ -301,7 +339,7 @@ export default function App() {
           <img 
             src={logoUrl} 
             alt={companyName} 
-            className="h-10 object-contain mx-auto mb-6 opacity-80"
+            className="h-auto w-full max-w-[200px] object-contain mx-auto mb-6 opacity-80"
           />
           <p className="text-gray-500 font-medium">{companyName} &copy; {new Date().getFullYear()}</p>
         </div>
@@ -310,9 +348,11 @@ export default function App() {
       <ShareModal 
         isOpen={isShareModalOpen} 
         onClose={() => setIsShareModalOpen(false)} 
+        logoUrl={logoUrl}
       />
       
       <InstallPrompt />
     </div>
+    </>
   );
 }
