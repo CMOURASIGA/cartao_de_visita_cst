@@ -73,7 +73,7 @@ export default function App() {
               <img
                 src={iconUrl}
                 alt={companyName}
-                className="h-24 md:h-32 object-contain"
+                className="h-64 md:h-80 max-w-[90vw] object-contain"
               />
               <motion.div 
                 initial={{ width: 0 }}
