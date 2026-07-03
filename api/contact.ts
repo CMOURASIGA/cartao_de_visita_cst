@@ -74,6 +74,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
+    const requiredEnvVars = [
+      'SMTP_HOST',
+      'SMTP_PORT',
+      'SMTP_USER',
+      'SMTP_PASS',
+      'SMTP_FROM_EMAIL',
+      'CONTACT_RECEIVER_EMAIL',
+    ];
+
+    const missingVars = requiredEnvVars.filter((key) => !process.env[key]);
+
+    if (missingVars.length > 0) {
+      console.error('Variáveis SMTP ausentes:', missingVars);
+
+      return res.status(500).json({
+        error: `Configuração de e-mail incompleta. Variáveis ausentes: ${missingVars.join(', ')}`,
+      });
+    }
+
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT || '587'),
@@ -114,11 +133,21 @@ ${appUrl}
       success: true,
       message: 'Mensagem enviada com sucesso.',
     });
-  } catch (error) {
-    console.error('Erro ao enviar e-mail:', error);
+  } catch (error: any) {
+    console.error('Erro ao enviar e-mail:', {
+      message: error?.message,
+      code: error?.code,
+      command: error?.command,
+      response: error?.response,
+      responseCode: error?.responseCode,
+    });
 
     return res.status(500).json({
       error: 'Não foi possível enviar sua mensagem agora. Tente novamente ou fale pelo WhatsApp.',
+      detail:
+        process.env.NODE_ENV !== 'production'
+          ? error?.message
+          : undefined,
     });
   }
 }
