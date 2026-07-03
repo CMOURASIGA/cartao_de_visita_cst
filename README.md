@@ -1,20 +1,21 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Cartão Digital - Consult Services Tecnologia
 
-# Run and deploy your AI Studio app
+Webapp profissional da Consult Services Tecnologia para apresentação da empresa, projetos, contatos, QR Code, vCard, formulário de contato e instalação como PWA.
 
-This contains everything you need to run your app locally.
+## Rodar localmente
 
-View your app in AI Studio: https://ai.studio/apps/d0232b98-ccd4-4055-906f-ceaaefd38299
+```bash
+npm install
+npm run dev
+```
 
-## Run Locally
+## Build
 
-**Prerequisites:**  Node.js
+```bash
+npm run build
+npm run start
+```
 
+## Variáveis de ambiente
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Copiar `.env.example` para `.env` e preencher os dados reais.

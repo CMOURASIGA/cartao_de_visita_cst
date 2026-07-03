@@ -12,7 +12,7 @@ export default function ShareModal({ isOpen, onClose, logoUrl }: ShareModalProps
   const [copied, setCopied] = useState(false);
   const [canShare, setCanShare] = useState(false);
   
-  const appUrl = import.meta.env.VITE_PUBLIC_APP_URL || window.location.origin;
+  const appUrl = import.meta.env.VITE_SHARE_URL || import.meta.env.VITE_PUBLIC_APP_URL || window.location.origin;
   const qrUrl = import.meta.env.VITE_QR_CODE_TARGET_URL || appUrl;
   const shareTitle = import.meta.env.VITE_SHARE_TITLE || 'Consult Services Tecnologia';
   const shareText = import.meta.env.VITE_SHARE_TEXT || 'Cartão Digital';
@@ -27,7 +27,7 @@ export default function ShareModal({ isOpen, onClose, logoUrl }: ShareModalProps
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(appUrl);
+      await navigator.clipboard.writeText(qrUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -41,7 +41,7 @@ export default function ShareModal({ isOpen, onClose, logoUrl }: ShareModalProps
         await navigator.share({
           title: shareTitle,
           text: shareText,
-          url: appUrl,
+          url: qrUrl,
         });
       } catch (err) {
         console.error('Error sharing:', err);

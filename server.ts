@@ -7,10 +7,23 @@ import 'dotenv/config';
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
   app.use(express.json());
-  app.use(cors());
+
+  const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
+    .split(',')
+    .map(origin => origin.trim())
+    .filter(Boolean);
+
+  app.use(cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin) || allowedOrigins.length === 0) {
+        return callback(null, true);
+      }
+      return callback(new Error('Origem não permitida pelo CORS'));
+    }
+  }));
 
   // Rate Limiting (Simple In-Memory)
   const rateLimitWindowMs = parseInt(process.env.CONTACT_FORM_RATE_LIMIT_WINDOW_MINUTES || '10') * 60 * 1000;
@@ -51,6 +64,8 @@ async function startServer() {
     const email = process.env.VCF_EMAIL || "";
     const site = process.env.VCF_SITE || "";
     const linkedin = process.env.VCF_LINKEDIN || "";
+    const github = process.env.VCF_GITHUB || "";
+    const instagram = process.env.VCF_INSTAGRAM || "";
 
     const vcard = `BEGIN:VCARD
 VERSION:3.0
@@ -63,7 +78,7 @@ TEL;TYPE=CELL,WHATSAPP:${whatsapp}
 EMAIL:${email}
 URL:${site}
 URL;TYPE=LinkedIn:${linkedin}
-END:VCARD`;
+${github ? `URL;TYPE=GitHub:${github}\n` : ''}${instagram ? `URL;TYPE=Instagram:${instagram}\n` : ''}END:VCARD`;
 
     res.setHeader('Content-Type', 'text/vcard; charset=utf-8');
     res.setHeader('Content-Disposition', `attachment; filename="${vcfFileName}"`);
@@ -113,7 +128,7 @@ END:VCARD`;
         from: `"${process.env.SMTP_FROM_NAME}" <${process.env.SMTP_FROM_EMAIL}>`,
         to: process.env.CONTACT_RECEIVER_EMAIL,
         cc: process.env.CONTACT_COPY_EMAIL || undefined,
-        subject: `Novo contato pelo cartão digital - ${process.env.COMPANY_NAME || 'App'}`,
+        subject: `Novo contato pelo cartão digital - ${process.env.COMPANY_NAME || process.env.VITE_COMPANY_NAME || 'Consult Services Tecnologia'}`,
         text: `
 Você recebeu uma nova mensagem pelo cartão digital.
 
