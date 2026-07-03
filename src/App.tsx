@@ -30,11 +30,11 @@ export default function App() {
   const personBio = env.VITE_PERSON_BIO || "À frente da Consult Services Tecnologia, atua conectando processos, tecnologia e visão operacional para criar soluções práticas, com foco em clareza, organização e tomada de decisão.";
   const personPhoto = env.VITE_PERSON_PHOTO_URL || "https://placehold.co/400x400/00AEEF/white?text=CM";
 
-  const whatsappNumber = env.VITE_CONTACT_WHATSAPP_NUMBER || "5521999999999";
+  const whatsappNumber = env.VITE_CONTACT_WHATSAPP_NUMBER || "5521981845675";
   const whatsappMessage = env.VITE_CONTACT_WHATSAPP_MESSAGE || "Olá, Christian. Conheci a Consult Services Tecnologia pelo seu cartão digital e gostaria de conversar sobre uma solução para minha empresa.";
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
   
-  const linkedinUrl = env.VITE_CONTACT_LINKEDIN_URL || "https://linkedin.com/in/christianmoura";
+  const linkedinUrl = env.VITE_CONTACT_LINKEDIN_URL || "https://www.linkedin.com/in/christianmourasantos/";
   const email = env.VITE_CONTACT_EMAIL || "contato@seudominio.com.br";
 
   const primaryColor = env.VITE_COMPANY_PRIMARY_COLOR || "#003B73";
