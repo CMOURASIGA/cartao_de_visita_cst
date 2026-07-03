@@ -58,6 +58,25 @@ async function startServer() {
     res.json({ status: "ok" });
   });
 
+  app.get("/manifest.json", (req, res) => {
+    res.json({
+      name: process.env.VITE_COMPANY_NAME || "Consult Services Tecnologia",
+      short_name: process.env.VITE_PUBLIC_APP_SHORT_NAME || "Consult",
+      description: process.env.VITE_COMPANY_DESCRIPTION || "Tecnologia, processos, integrações, automações e IA aplicada a negócios.",
+      start_url: "/",
+      display: "standalone",
+      background_color: "#ffffff",
+      theme_color: process.env.VITE_COMPANY_PRIMARY_COLOR || "#003B73",
+      icons: [
+        {
+          src: process.env.VITE_COMPANY_ICON_URL || "/icons/icon-192.png",
+          sizes: "192x192 512x512",
+          type: "image/png"
+        }
+      ]
+    });
+  });
+
   app.get("/api/vcard", (req, res) => {
     const vcfFileName = process.env.VCF_FILE_NAME || "contato.vcf";
     const fullName = process.env.VCF_FULL_NAME || "";

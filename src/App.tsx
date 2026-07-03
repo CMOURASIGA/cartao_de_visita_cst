@@ -12,6 +12,19 @@ export default function App() {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
+    // Atualizar título e ícone dinamicamente
+    const env = import.meta.env;
+    const company = env.VITE_COMPANY_NAME || "Consult Services Tecnologia";
+    const person = env.VITE_PERSON_FULL_NAME || "Christian Moura";
+    const icon = env.VITE_COMPANY_ICON_URL || "/icons/icon-192.png";
+    
+    document.title = `${company} | ${person}`;
+    
+    const favicon = document.getElementById("dynamic-favicon") as HTMLLinkElement;
+    if (favicon) {
+      favicon.href = icon;
+    }
+
     // Esconder a tela de abertura após 2.5 segundos
     const timer = setTimeout(() => setShowSplash(false), 2500);
     return () => clearTimeout(timer);
