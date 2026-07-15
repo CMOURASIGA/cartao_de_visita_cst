@@ -92,56 +92,62 @@ export default function App() {
         <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-[#00AEEF]/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-[#003B73]/5 rounded-full blur-3xl" />
         
-        <div className="max-w-4xl mx-auto relative z-10 text-center">
+        <div className="max-w-4xl mx-auto relative z-10 text-center flex flex-col items-center">
           <img 
             src={logoUrl} 
             alt={companyName} 
-            className="h-auto w-full max-w-[400px] md:max-w-[560px] object-contain mx-auto mb-0"
+            className="h-auto w-full max-w-[400px] md:max-w-[480px] object-contain mx-auto mb-6"
           />
           
-          <p className="text-xl md:text-2xl text-[#003B73] font-medium mb-6 mt-0 md:-mt-4">
-            {tagline}
-          </p>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00AEEF]/10 text-[#003B73] font-semibold text-sm mb-6">
+            <span className="flex h-2 w-2 rounded-full bg-[#00AEEF] animate-pulse"></span>
+            Transformação Digital para o seu Negócio
+          </div>
           
-          <p className="text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl text-[#003B73] font-bold mb-6 tracking-tight leading-tight max-w-3xl mx-auto">
+            {tagline}
+          </h1>
+          
+          <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
             {description}
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto">
             <a 
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-full font-medium hover:bg-[#20bd5a] transition-all shadow-sm hover:shadow-md"
+              className="flex items-center justify-center gap-2 bg-[#003B73] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#002855] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto text-lg"
             >
               <MessageCircle className="h-5 w-5" />
-              Falar pelo WhatsApp
+              Agendar Diagnóstico
             </a>
             
             <a 
               href="#solucoes"
-              className="flex items-center gap-2 bg-white text-[#003B73] border border-[#003B73]/20 px-6 py-3 rounded-full font-medium hover:bg-gray-50 transition-all shadow-sm hover:shadow-md"
+              className="flex items-center justify-center gap-2 bg-white text-[#003B73] border-2 border-[#003B73]/20 px-8 py-4 rounded-full font-semibold hover:bg-gray-50 hover:border-[#003B73]/40 transition-all w-full sm:w-auto text-lg"
             >
-              Ver soluções
-              <ArrowRight className="h-4 w-4" />
+              Ver Soluções
+              <ArrowRight className="h-5 w-5" />
             </a>
+          </div>
 
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
             <a 
               href={linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-white text-[#0a66c2] border border-gray-200 px-6 py-3 rounded-full font-medium hover:bg-gray-50 transition-all shadow-sm hover:shadow-md"
+              className="flex items-center gap-2 text-gray-500 hover:text-[#0a66c2] font-medium transition-colors"
             >
               <Linkedin className="h-5 w-5" />
-              Conectar no LinkedIn
+              <span>LinkedIn</span>
             </a>
-
             <button 
               onClick={() => setIsShareModalOpen(true)}
-              className="flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-all shadow-sm hover:shadow-md"
+              className="flex items-center gap-2 text-gray-500 hover:text-[#003B73] font-medium transition-colors"
             >
               <Share2 className="h-5 w-5" />
-              Compartilhar cartão
+              <span>Compartilhar</span>
             </button>
           </div>
         </div>
