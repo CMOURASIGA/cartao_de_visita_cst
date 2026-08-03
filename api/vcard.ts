@@ -14,6 +14,10 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     res.status(200).end();
     return;
   }
+  if (req.method !== 'GET') {
+    res.setHeader('Allow', 'GET, OPTIONS');
+    return res.status(405).json({ error: 'Método não permitido' });
+  }
   
   const vcfFileName = process.env.VCF_FILE_NAME || 'contato.vcf';
   const fullName = process.env.VCF_FULL_NAME || '';
@@ -43,6 +47,8 @@ URL;TYPE=LinkedIn:${linkedin}
 ${github ? `URL;TYPE=GitHub:${github}\n` : ''}${instagram ? `URL;TYPE=Instagram:${instagram}\n` : ''}END:VCARD`;
 
   res.setHeader('Content-Type', 'text/vcard; charset=utf-8');
-  res.setHeader('Content-Disposition', `attachment; filename="${vcfFileName}"`);
+  // Em celulares, esta resposta é reconhecida pelo sistema como um contato
+  // e abre a tela para adicionar os dados à agenda do próprio aparelho.
+  res.setHeader('Content-Disposition', `inline; filename="${vcfFileName}"`);
   return res.status(200).send(vcard);
 }
