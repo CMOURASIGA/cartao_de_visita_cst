@@ -4,7 +4,6 @@ import { MessageCircle, Linkedin, Mail, Share2, UserPlus, CheckCircle2, ChevronR
 import Section from './components/Section';
 import ShareModal from './components/ShareModal';
 import ContactForm from './components/ContactForm';
-import InstallPrompt from './components/InstallPrompt';
 import { services, projects, automations } from './data';
 
 export default function App() {
@@ -370,7 +369,6 @@ export default function App() {
         logoUrl={logoUrl}
       />
       
-      <InstallPrompt />
     </div>
     </>
   );
