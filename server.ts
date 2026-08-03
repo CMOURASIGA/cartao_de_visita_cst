@@ -89,7 +89,6 @@ async function startServer() {
     const email = process.env.VCF_EMAIL || "";
     const site = process.env.VCF_SITE || "";
     const linkedin = process.env.VCF_LINKEDIN || "";
-    const github = process.env.VCF_GITHUB || "";
     const instagram = process.env.VCF_INSTAGRAM || "";
 
     const vcard = `BEGIN:VCARD
@@ -103,7 +102,7 @@ TEL;TYPE=CELL,WHATSAPP:${whatsapp}
 EMAIL:${email}
 URL:${site}
 URL;TYPE=LinkedIn:${linkedin}
-${github ? `URL;TYPE=GitHub:${github}\n` : ''}${instagram ? `URL;TYPE=Instagram:${instagram}\n` : ''}END:VCARD`;
+${instagram ? `URL;TYPE=Instagram:${instagram}\n` : ''}END:VCARD`;
 
     res.setHeader('Content-Type', 'text/vcard; charset=utf-8');
     // Em celulares, esta resposta é reconhecida pelo sistema como um contato
