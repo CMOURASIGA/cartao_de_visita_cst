@@ -14,10 +14,6 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     res.status(200).end();
     return;
   }
-  if (req.method !== 'GET') {
-    res.setHeader('Allow', 'GET, OPTIONS');
-    return res.status(405).json({ error: 'Método não permitido' });
-  }
   
   const vcfFileName = process.env.VCF_FILE_NAME || 'contato.vcf';
   const fullName = process.env.VCF_FULL_NAME || '';
@@ -30,6 +26,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   const email = process.env.VCF_EMAIL || '';
   const site = process.env.VCF_SITE || '';
   const linkedin = process.env.VCF_LINKEDIN || '';
+  const github = process.env.VCF_GITHUB || '';
   const instagram = process.env.VCF_INSTAGRAM || '';
 
   const vcard = `BEGIN:VCARD
@@ -43,11 +40,9 @@ TEL;TYPE=CELL,WHATSAPP:${whatsapp}
 EMAIL:${email}
 URL:${site}
 URL;TYPE=LinkedIn:${linkedin}
-${instagram ? `URL;TYPE=Instagram:${instagram}\n` : ''}END:VCARD`;
+${github ? `URL;TYPE=GitHub:${github}\n` : ''}${instagram ? `URL;TYPE=Instagram:${instagram}\n` : ''}END:VCARD`;
 
   res.setHeader('Content-Type', 'text/vcard; charset=utf-8');
-  // Em celulares, esta resposta é reconhecida pelo sistema como um contato
-  // e abre a tela para adicionar os dados à agenda do próprio aparelho.
-  res.setHeader('Content-Disposition', `inline; filename="${vcfFileName}"`);
+  res.setHeader('Content-Disposition', `attachment; filename="${vcfFileName}"`);
   return res.status(200).send(vcard);
 }

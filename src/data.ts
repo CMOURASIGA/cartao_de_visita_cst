@@ -72,6 +72,20 @@ export const projects: Project[] = [
       "Eventos de conta",
       "Apoio a professores, alunos e instituições"
     ]
+  },
+  {
+    name: "CRM Flow",
+    category: "Centralização de atendimento e gestão de leads comerciais.",
+    description: "Solução criada para centralizar o atendimento, organizar leads e apoiar equipes comerciais na gestão do relacionamento com clientes, ajudando empresas a ganharem controle, organização e velocidade no atendimento.",
+    features: [
+      "Gestão de leads em funil comercial",
+      "Atendimento por conversas",
+      "Perfis de acesso por usuário",
+      "Respostas rápidas",
+      "Histórico de interações",
+      "Apoio com Inteligência Artificial",
+      "Ambiente seguro com dados fictícios para apresentação"
+    ]
   }
 ];
 
