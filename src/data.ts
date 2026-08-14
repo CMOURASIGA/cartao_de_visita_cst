@@ -86,6 +86,22 @@ export const projects: Project[] = [
       "Apoio com Inteligência Artificial",
       "Ambiente seguro com dados fictícios para apresentação"
     ]
+  },
+  {
+    name: "7Finance",
+    category: "Gestão financeira inteligente e centralizada.",
+    description: "Desenvolvido para tornar a gestão financeira mais clara, organizada e segura. Mais do que registrar entradas e saídas, o 7Finance ajuda a entender o que os números representam e como cada decisão afeta o resultado da empresa, sem depender de informações espalhadas.",
+    features: [
+      "Controle de receitas, custos e despesas",
+      "Acompanhamento de valores previstos e realizados",
+      "Reserva de valores para impostos e compromissos futuros",
+      "Visualização do saldo realmente disponível",
+      "Identificação de lançamentos pagos, pendentes e reservados",
+      "Acompanhamento de indicadores financeiros",
+      "Análise de resultados mensais e anuais",
+      "Gestão de investimentos e participação de sócios",
+      "Relatórios de apoio à decisão"
+    ]
   }
 ];
 
