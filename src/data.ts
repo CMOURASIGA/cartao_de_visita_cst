@@ -59,6 +59,20 @@ export const projects: Project[] = [
     ]
   },
   {
+    name: "CRM Flow",
+    category: "Centralização de atendimento e gestão de leads comerciais.",
+    description: "Solução criada para centralizar o atendimento, organizar leads e apoiar equipes comerciais na gestão do relacionamento com clientes, ajudando empresas a ganharem controle, organização e velocidade no atendimento.",
+    features: [
+      "Gestão de leads em funil comercial",
+      "Atendimento por conversas",
+      "Perfis de acesso por usuário",
+      "Respostas rápidas",
+      "Histórico de interações",
+      "Apoio com Inteligência Artificial",
+      "Ambiente seguro com dados fictícios para apresentação"
+    ]
+  },
+  {
     name: "EduQuestAI",
     category: "IA aplicada à educação e geração de provas.",
     description: "Aplicação educacional para criação de provas com inteligência artificial, controle de acesso, planos, créditos e cadastro de alunos, apoiando professores, estudantes e instituições.",
@@ -71,20 +85,6 @@ export const projects: Project[] = [
       "Registro de consumo",
       "Eventos de conta",
       "Apoio a professores, alunos e instituições"
-    ]
-  },
-  {
-    name: "CRM Flow",
-    category: "Centralização de atendimento e gestão de leads comerciais.",
-    description: "Solução criada para centralizar o atendimento, organizar leads e apoiar equipes comerciais na gestão do relacionamento com clientes, ajudando empresas a ganharem controle, organização e velocidade no atendimento.",
-    features: [
-      "Gestão de leads em funil comercial",
-      "Atendimento por conversas",
-      "Perfis de acesso por usuário",
-      "Respostas rápidas",
-      "Histórico de interações",
-      "Apoio com Inteligência Artificial",
-      "Ambiente seguro com dados fictícios para apresentação"
     ]
   },
   {
