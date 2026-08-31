@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageCircle, Linkedin, Mail, Share2, UserPlus, CheckCircle2, ChevronRight, ArrowRight } from 'lucide-react';
+import { MessageCircle, Linkedin, Mail, Share2, UserPlus, CheckCircle2, ChevronRight, ArrowRight, Layers, ExternalLink } from 'lucide-react';
 import Section from './components/Section';
 import ShareModal from './components/ShareModal';
 import ContactForm from './components/ContactForm';
 import InstallPrompt from './components/InstallPrompt';
 import { services, projects, automations } from './data';
+import { hubProducts } from './data/hubProducts';
 
 export default function App() {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -51,6 +52,19 @@ export default function App() {
   const email = env.VITE_CONTACT_EMAIL || "contato@seudominio.com.br";
 
   const primaryColor = env.VITE_COMPANY_PRIMARY_COLOR || "#003B73";
+
+  // Consult Services Solutions Hub — o botão "Acessar 7Hub" só aponta para uma
+  // URL real quando o ambiente estiver definido; caso contrário fica oculto,
+  // sem gerar link fictício (docs/specs/solutions-hub-site.md, seções 12 e 19).
+  const hubUrl: string | undefined = env.VITE_7HUB_URL || undefined;
+
+  const hubDemoMessage = (productName?: string) =>
+    productName
+      ? `Olá! Tenho interesse em conhecer o ${productName} do Consult Services Solutions Hub e gostaria de solicitar uma demonstração.`
+      : "Olá! Tenho interesse em conhecer o Consult Services Solutions Hub e gostaria de solicitar uma demonstração.";
+
+  const hubDemoLink = (productName?: string) =>
+    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(hubDemoMessage(productName))}`;
 
   return (
     <>
@@ -123,13 +137,25 @@ export default function App() {
               Agendar Diagnóstico
             </a>
             
-            <a 
-              href="#solucoes"
+            <a
+              href="#solutions-hub"
               className="flex items-center justify-center gap-2 bg-white text-[#003B73] border-2 border-[#003B73]/20 px-8 py-4 rounded-full font-semibold hover:bg-gray-50 hover:border-[#003B73]/40 transition-all w-full sm:w-auto text-lg"
             >
               Ver Soluções
               <ArrowRight className="h-5 w-5" />
             </a>
+
+            {hubUrl && (
+              <a
+                href={hubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-[#00AEEF] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#0098d1] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto text-lg"
+              >
+                Acessar 7Hub
+                <ExternalLink className="h-5 w-5" />
+              </a>
+            )}
           </div>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
@@ -153,8 +179,120 @@ export default function App() {
         </div>
       </header>
 
+      {/* Consult Services Solutions Hub */}
+      <Section
+        id="solutions-hub"
+        title="Consult Services Solutions Hub"
+        subtitle="Um ecossistema de soluções para diferentes áreas da sua empresa."
+        bgWhite={true}
+      >
+        <p className="text-center text-gray-600 max-w-2xl mx-auto -mt-6 mb-12 leading-relaxed">
+          Projetos, finanças, eventos, relacionamento comercial e informações jurídicas organizados em soluções
+          especializadas, com acesso centralizado pelo 7Hub.
+        </p>
+
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
+          <a
+            href="#hub-produtos"
+            className="flex items-center justify-center gap-2 bg-[#003B73] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#002855] transition-all w-full sm:w-auto"
+          >
+            Conhecer o Solutions Hub
+          </a>
+          <a
+            href={hubDemoLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 bg-white text-[#003B73] border-2 border-[#003B73]/20 px-6 py-3 rounded-full font-semibold hover:bg-gray-50 hover:border-[#003B73]/40 transition-all w-full sm:w-auto"
+          >
+            <MessageCircle className="h-4 w-4" />
+            Solicitar demonstração
+          </a>
+        </div>
+
+        {/* Destaque visual do 7Hub */}
+        <div className="rounded-3xl bg-gradient-to-br from-[#003B73] to-[#00AEEF] text-white p-8 md:p-10 mb-16">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+            <div className="h-14 w-14 rounded-2xl bg-white/15 flex items-center justify-center shrink-0">
+              <Layers className="h-7 w-7 text-white" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold mb-2">Tudo começa no 7Hub</h3>
+              <p className="text-blue-50 leading-relaxed mb-5 max-w-2xl">
+                Um único ponto de acesso para as soluções Consult Services contratadas pela sua empresa.
+              </p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl">
+                {[
+                  "Acesso centralizado",
+                  "Visualização das soluções disponíveis para o cliente",
+                  "Experiência única entre os produtos",
+                  "Crescimento modular, conforme a necessidade",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-white/90 shrink-0" />
+                    <span className="text-blue-50">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Produtos principais do Hub */}
+        <div id="hub-produtos" className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 scroll-mt-24">
+          {hubProducts.filter((p) => p.active).map((product) => {
+            const productUrl = (env as Record<string, string | undefined>)[product.envUrlKey];
+            return (
+              <div
+                key={product.slug}
+                className="bg-gray-50 p-6 rounded-2xl border border-gray-100 hover:shadow-md transition-shadow flex flex-col"
+              >
+                <div className="h-12 w-12 rounded-xl bg-[#003B73]/5 flex items-center justify-center mb-4">
+                  <product.icon className="h-6 w-6 text-[#003B73]" />
+                </div>
+                <div className="inline-block px-3 py-1 rounded-full bg-white text-[#003B73] text-xs font-medium border border-[#003B73]/10 mb-3 w-fit">
+                  {product.category}
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{product.name}</h3>
+                <p className="text-gray-600 leading-relaxed mb-4">{product.description}</p>
+                <ul className="grid grid-cols-2 gap-2 mb-6">
+                  {product.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2 text-sm">
+                      <CheckCircle2 className="h-4 w-4 text-[#00AEEF] shrink-0 mt-0.5" />
+                      <span className="text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={productUrl || hubDemoLink(product.name)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-auto flex items-center justify-center gap-2 bg-[#003B73] text-white px-5 py-2.5 rounded-xl font-medium hover:bg-[#002855] transition-colors w-fit"
+                >
+                  {product.ctaLabel}
+                  {productUrl ? <ExternalLink className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
+                </a>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Modularidade comercial */}
+        <div className="text-center max-w-2xl mx-auto">
+          <h3 className="text-2xl font-bold text-gray-900 mb-3">Comece com o que sua empresa precisa hoje.</h3>
+          <p className="text-gray-600 leading-relaxed">
+            As soluções Consult Services podem ser adotadas de forma independente. Sua empresa pode iniciar por uma
+            necessidade específica e adicionar novos módulos ao ambiente conforme a operação evolui.
+          </p>
+        </div>
+      </Section>
+
       {/* O que fazemos */}
-      <Section id="servicos" title="O que fazemos" bgWhite={false}>
+      <Section
+        id="servicos"
+        title="O que fazemos"
+        subtitle="Se a solução que sua empresa precisa não estiver pronta dentro do Hub, a Consult Services pode estruturar, integrar ou desenvolver uma solução específica."
+        bgWhite={false}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, idx) => (
             <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
@@ -168,8 +306,13 @@ export default function App() {
         </div>
       </Section>
 
-      {/* Soluções desenvolvidas */}
-      <Section id="solucoes" title="Soluções desenvolvidas" subtitle="Projetos principais criados para otimizar operações e gerenciar dados." bgWhite={true}>
+      {/* Outras soluções e projetos desenvolvidos */}
+      <Section
+        id="solucoes"
+        title="Outras soluções e projetos desenvolvidos"
+        subtitle="Além dos produtos que compõem o Solutions Hub, desenvolvemos aplicações e projetos específicos para diferentes necessidades de negócio."
+        bgWhite={true}
+      >
         <div className="space-y-8">
           {projects.map((project, idx) => (
             <div key={idx} className="flex flex-col md:flex-row bg-gray-50 rounded-3xl overflow-hidden border border-gray-100">

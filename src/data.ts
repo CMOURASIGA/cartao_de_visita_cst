@@ -30,20 +30,10 @@ export const services: (Service & { icon: React.ElementType })[] = [
   }
 ];
 
+// 7Commander, 7Finance e CRM Flow já são apresentados com destaque na seção
+// Consult Services Solutions Hub — não duplicados aqui para não parecerem
+// ofertas concorrentes ou categorias desconectadas (ver docs/specs/solutions-hub-site.md, seção 9).
 export const projects: Project[] = [
-  {
-    name: "7Commander",
-    category: "Gestão inteligente de projetos, tarefas e decisões.",
-    description: "Solução voltada para centralizar atividades, status, prioridades, decisões e acompanhamento operacional, ajudando equipes e gestores a terem mais clareza sobre o andamento dos projetos.",
-    features: [
-      "Gestão de tarefas",
-      "Organização por status",
-      "Priorização de demandas",
-      "Registro de decisões",
-      "Apoio à gestão operacional",
-      "Visão executiva de acompanhamento"
-    ]
-  },
   {
     name: "Consult Flow",
     category: "Gestão de conteúdo, aprovação e publicação digital.",
@@ -59,20 +49,6 @@ export const projects: Project[] = [
     ]
   },
   {
-    name: "CRM Flow",
-    category: "Centralização de atendimento e gestão de leads comerciais.",
-    description: "Solução criada para centralizar o atendimento, organizar leads e apoiar equipes comerciais na gestão do relacionamento com clientes, ajudando empresas a ganharem controle, organização e velocidade no atendimento.",
-    features: [
-      "Gestão de leads em funil comercial",
-      "Atendimento por conversas",
-      "Perfis de acesso por usuário",
-      "Respostas rápidas",
-      "Histórico de interações",
-      "Apoio com Inteligência Artificial",
-      "Ambiente seguro com dados fictícios para apresentação"
-    ]
-  },
-  {
     name: "EduQuestAI",
     category: "IA aplicada à educação e geração de provas.",
     description: "Aplicação educacional para criação de provas com inteligência artificial, controle de acesso, planos, créditos e cadastro de alunos, apoiando professores, estudantes e instituições.",
@@ -85,22 +61,6 @@ export const projects: Project[] = [
       "Registro de consumo",
       "Eventos de conta",
       "Apoio a professores, alunos e instituições"
-    ]
-  },
-  {
-    name: "7Finance",
-    category: "Gestão financeira inteligente e centralizada.",
-    description: "Desenvolvido para tornar a gestão financeira mais clara, organizada e segura. Mais do que registrar entradas e saídas, o 7Finance ajuda a entender o que os números representam e como cada decisão afeta o resultado da empresa, sem depender de informações espalhadas.",
-    features: [
-      "Controle de receitas, custos e despesas",
-      "Acompanhamento de valores previstos e realizados",
-      "Reserva de valores para impostos e compromissos futuros",
-      "Visualização do saldo realmente disponível",
-      "Identificação de lançamentos pagos, pendentes e reservados",
-      "Acompanhamento de indicadores financeiros",
-      "Análise de resultados mensais e anuais",
-      "Gestão de investimentos e participação de sócios",
-      "Relatórios de apoio à decisão"
     ]
   }
 ];
