@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, Linkedin, Mail, Share2, UserPlus, CheckCircle2, ChevronRight, ArrowRight, Layers, ExternalLink } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 import Section from './components/Section';
 import ShareModal from './components/ShareModal';
 import ContactForm from './components/ContactForm';
@@ -514,6 +515,7 @@ export default function App() {
       />
       
       <InstallPrompt />
+      <Analytics />
     </div>
     </>
   );
